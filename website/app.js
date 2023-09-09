@@ -48,22 +48,22 @@ const retrieveData = async (url='') =>{
 
 
 //Create an event listener for the element with the id: generate, with a callback function to execute when it is clicked
-const addBtnEvent = async () => {   
+function addBtnEvent(){
     //use to get the goToTopLink element by id
     const btnElement = document.getElementById('generate');
     //add the click event listener
-    btnElement.addEventListener('click', async () => {
+    btnElement.addEventListener('click', function () {
         //Get the Zipcode
         zipCode = "&city_id="+document.getElementById('zip').value;
         //Get the feeling
         feelings = document.getElementById('feelings').value;
         // GET request to the OpenWeatherMap API
-        let res = await retrieveData(baseURL+apiKey+zipCode);
+        let res = retrieveData(baseURL+apiKey+zipCode);
         //Post the data mix of API and user responses, to POST endpoint on server side.
         let newWeather = {
             temperature : Math.round(res.main.temp) + ' degrees',
             //this api does not retreive data so i use the time zode instead of it
-            date : res.timezone,    
+            date : res.timezone,
             userResponse : feelings
         };
         postData('/addWeather', newWeather);
